@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	inputFile := "input/d1.txt"
+	inputFile := "../input/d1.txt"
 	result := int64(2020)
 	numbers, err := ReadFile(inputFile)
 	if err != nil {
