@@ -9,6 +9,7 @@ func TestGetSeatIDFromBoardingPass(t *testing.T) {
 		seatID       int
 	}{
 		{"c1", "FBFBBFFRLR", 357},
+		{"c1-", "FBFBBFFRLL", 356},
 		{"c2", "BFFFBBFRRR", 567},
 		{"c3", "FFFBBBFRRR", 119},
 		{"c4", "BBFFBBFRLL", 820},
