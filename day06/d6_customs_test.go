@@ -20,8 +20,11 @@ func TestGetCustomsAnswerCount(t *testing.T) {
 		"",
 		"b",
 	}
-	count := GetCustomsAnswerCount(input)
-	if count != 11 {
-		t.Errorf("Invalid count: %d", count)
+	anyCount, everyCount := GetCustomsAnswerCount(input)
+	if anyCount != 11 {
+		t.Errorf("Invalid anyone answered count: %d", anyCount)
+	}
+	if everyCount != 6 {
+		t.Errorf("Invalid everyone answered count: %d", everyCount)
 	}
 }

@@ -15,26 +15,43 @@ func main() {
 	contents := string(bytes)
 	lines := strings.Split(contents, "\n")
 	lines = lines[:len(lines)-1]
-	count := GetCustomsAnswerCount(lines)
-	log.Printf("{Part 1): Total Customs Answer count: %d", count)
+	anyCount, everyCount := GetCustomsAnswerCount(lines)
+	log.Printf("(Part 1): Total Customs answer count (anyone answered): %d", anyCount)
+	log.Printf("(Part 2): Total Customs answer count (everyone answered): %d", everyCount)
 }
 
-func GetCustomsAnswerCount(input []string) int {
-	var count int
-	groupAns := make(map[rune]bool)
+func GetCustomsAnswerCount(input []string) (int, int) {
+	var anyCount, everyCount, groupCount int
+	groupAns := make(map[rune]int)
 	for _, ans := range input {
 		if len(ans) == 0 {
-			count += len(groupAns)
+			anyCount += len(groupAns)
+			for _, ct := range groupAns {
+				if ct == groupCount {
+					everyCount++
+				}
+			}
 			//log.Printf("Group Answers: %#v | Count: %d", groupAns, count)
-			groupAns = map[rune]bool{}
+			groupAns = map[rune]int{}
+			groupCount = 0
 			continue
 		}
 		for _, r := range ans {
-			groupAns[r] = true
+			if _, ok := groupAns[r]; ok {
+				groupAns[r]++
+			} else {
+				groupAns[r] = 1
+			}
 		}
+		groupCount++
 	}
 	if len(groupAns) > 0 {
-		count += len(groupAns)
+		anyCount += len(groupAns)
+		for _, ct := range groupAns {
+			if ct == groupCount {
+				everyCount++
+			}
+		}
 	}
-	return count
+	return anyCount, everyCount
 }
