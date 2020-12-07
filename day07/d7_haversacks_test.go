@@ -14,8 +14,11 @@ func TestFindMatchingParentBags(t *testing.T) {
 		"faded blue bags contain no other bags.",
 		"dotted black bags contain no other bags.",
 	}
-	count := FindMatchingParentBags(input, "shiny gold")
-	if count != 4 {
-		t.Errorf("Invalid count: %d", count)
+	parentCount, childCount := FindMatches(input, "shiny gold")
+	if parentCount != 4 {
+		t.Errorf("Invalid parent count: %d", parentCount)
+	}
+	if childCount != 32 {
+		t.Errorf("Invalid child count: %d", childCount)
 	}
 }
