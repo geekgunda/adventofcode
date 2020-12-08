@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestFindLoop(t *testing.T) {
+func TestFindAndFixLoop(t *testing.T) {
 	input := []string{
 		"nop +0",
 		"acc +1",
@@ -14,8 +14,13 @@ func TestFindLoop(t *testing.T) {
 		"jmp -4",
 		"acc +6",
 	}
-	res := FindLoop(input)
-	if res != 5 {
-		t.Errorf("Invalid result: %d", res)
+	insts := ParseInstructions(input)
+	loopRes, _ := FindLoop(insts)
+	if loopRes != 5 {
+		t.Errorf("Invalid loop result: %d", loopRes)
+	}
+	loopRes = FixLoop(insts)
+	if loopRes != 8 {
+		t.Errorf("Invalid final result: %d", loopRes)
 	}
 }
