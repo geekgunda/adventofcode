@@ -2,37 +2,27 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"log"
 	"regexp"
 	"strconv"
 	"strings"
 )
 
-var re *regexp.Regexp
-
-func init() {
-	re = regexp.MustCompile(`(\w+):(#*\w+)\s*`)
-}
-
-func main() {
-	inputFile := "../input/d4.txt"
-	bytes, err := ioutil.ReadFile(inputFile)
+func day4() error {
+	lines, err := readFileAsStrings()
 	if err != nil {
-		log.Fatalf("Error reading file: %v", err)
+		return err
 	}
-	contents := string(bytes)
-	lines := strings.Split(contents, "\n")
-	lines = lines[:len(lines)-1]
 	count := GetValidPassportCount(lines, false)
-	log.Printf("(Part 1) Valid passport count: %d", count)
+	logResult(4, 1, "Valid passport count", count)
 	count = GetValidPassportCount(lines, true)
-	log.Printf("(Part 2) Valid passport count: %d", count)
+	logResult(4, 2, "Valid passport count", count)
+	return nil
 }
 
 func GetValidPassportCount(lines []string, strictCheck bool) int {
 	var passportFields string
 	var count int
+	re := regexp.MustCompile(`(\w+):(#*\w+)\s*`)
 	for _, l := range lines {
 		if len(l) == 0 {
 			//fmt.Println("New line found: ", passportFields)

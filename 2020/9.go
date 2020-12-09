@@ -1,33 +1,15 @@
 package main
 
-import (
-	"io/ioutil"
-	"log"
-	"strconv"
-	"strings"
-)
-
-func main() {
-	inputFile := "../input/d9.txt"
-	bytes, err := ioutil.ReadFile(inputFile)
+func day9() error {
+	input, err := readFileAsInts64()
 	if err != nil {
-		log.Fatalf("Error reading input file: %v", err)
-	}
-	contents := string(bytes)
-	lines := strings.Split(contents, "\n")
-	lines = lines[:len(lines)-1]
-	input := make([]int64, len(lines))
-	for i, l := range lines {
-		tmp, err := strconv.ParseInt(l, 10, 64)
-		if err != nil {
-			log.Fatalf("Error parsing number: %s | Err: %v", l, err)
-		}
-		input[i] = tmp
+		return err
 	}
 	res, pos := FindInvalidNumber(input, 25)
-	log.Printf("(Part 1) First invalid number in the sequence: %d", res)
+	logResult(9, 1, "First invalid number in the sequence", res)
 	res = FindEncryptionWeakness(input, pos)
-	log.Printf("(Part 2) Encryption weakness: %d", res)
+	logResult(9, 2, "Encryption weakness", res)
+	return nil
 }
 
 func FindInvalidNumber(numbers []int64, preambleLen int64) (int64, int64) {
@@ -39,13 +21,11 @@ func FindInvalidNumber(numbers []int64, preambleLen int64) (int64, int64) {
 	size = int64(len(numbers))
 	for i = preambleLen; i < size; i++ {
 		preamble[numbers[i-1]] = true
-		//log.Printf("Preamble: %#v", preamble)
 		isValid := FindAdditives(numbers[i], preamble)
 		if !isValid {
 			res = numbers[i]
 			break
 		}
-		//log.Printf("Next num: %d | Found pieces: %d and %d", numbers[i], n1, n2)
 		delete(preamble, numbers[i-preambleLen])
 	}
 	return res, i
@@ -66,7 +46,7 @@ func FindEncryptionWeakness(numbers []int64, invalidPos int64) (res int64) {
 	if isMatch {
 		n1, n2 := FindSmallestAndLargest(numbers[p1 : p2+1])
 		res = n1 + n2
-		log.Printf("Found match at pos: %d to %d | values: %d and %d | sum: %d", p1, p2, n1, n2, res)
+		//fmt.Printf("Found match at pos: %d to %d | values: %d and %d | sum: %d\n", p1, p2, n1, n2, res)
 	}
 	return
 }
@@ -76,7 +56,7 @@ func FindContiguousAdditives(numbers []int64, target int64) (p1, p2 int64, isMat
 	for i := int64(1); i < count; i++ {
 		for j := int64(0); j < count-i; j++ {
 			s := sum(numbers[j : j+i+1])
-			log.Printf("Trying to find contiguous additives: len: %d | start: %d | end: %d | sum: %d | target: %d", i, j, j+i, s, target)
+			//fmt.Printf("Trying to find contiguous additives: len: %d | start: %d | end: %d | sum: %d | target: %d\n", i, j, j+i, s, target)
 			if s == target {
 				p1 = j
 				p2 = j + i

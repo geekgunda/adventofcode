@@ -4,6 +4,24 @@ import (
 	"fmt"
 )
 
+func day1() error {
+	numbers, err := readFileAsInts64()
+	if err != nil {
+		return err
+	}
+	result := int64(2020)
+	product, err := FindMatchingPair(numbers, result)
+	if err != nil {
+		return err
+	}
+	logResult(1, 1, "Product (2) is", product)
+	if product, err = FindMatchingTriplet(numbers, result); err != nil {
+		return err
+	}
+	logResult(1, 2, "Product (3) is", product)
+	return nil
+}
+
 func FindMatchingPair(numbers []int64, result int64) (int64, error) {
 	lookup := make(map[int64]bool)
 	for _, n := range numbers {

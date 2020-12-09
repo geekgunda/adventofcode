@@ -1,25 +1,17 @@
 package main
 
-import (
-	"io/ioutil"
-	"log"
-	"strings"
-)
+import "fmt"
 
-func main() {
-	inputFile := "../input/d5.txt"
-	bytes, err := ioutil.ReadFile(inputFile)
+func day5() error {
+	lines, err := readFileAsStrings()
 	if err != nil {
-		log.Fatalf("Error reading input file: %v", err)
+		return err
 	}
-	contents := string(bytes)
-	lines := strings.Split(contents, "\n")
-	lines = lines[:len(lines)-1]
-	log.Println("Total passes found: ", len(lines))
 	highestSeatID := GetHighestSeatID(lines)
-	log.Printf("(Part 1) Highest Seat ID: %d", highestSeatID)
+	logResult(5, 1, "Highest Seat ID", highestSeatID)
 	missingSeatID := FindMissingSeat(lines)
-	log.Printf("(Part 2) Missing Seat ID: %d", missingSeatID)
+	logResult(5, 2, "Missing Seat ID", missingSeatID)
+	return nil
 }
 
 func FindMissingSeat(passes []string) int {
@@ -27,7 +19,6 @@ func FindMissingSeat(passes []string) int {
 	// make a map of all possible seats
 	var found, high, low int
 	low = 1024
-	log.Println("Total boarding passes: ", len(passes))
 	for _, pass := range passes {
 		seatID := GetSeatIDFromBoardingPass(pass)
 		seats[seatID] = pass
@@ -39,7 +30,7 @@ func FindMissingSeat(passes []string) int {
 			high = seatID
 		}
 	}
-	log.Printf("Count of remaining seats: %d | High: %d | Low: %d | Found: %d", high-low-found+1, high, low, found)
+	//fmt.Printf("Count of remaining seats: %d | High: %d | Low: %d | Found: %d\n", high-low-found+1, high, low, found)
 	for i := low + 1; i < high; i++ {
 		if _, ok := seats[i]; !ok { // if this seat is missing
 			if _, ok = seats[i-1]; ok { // if seat -1 is present
@@ -75,7 +66,7 @@ func GetSeatIDFromBoardingPass(pass string) int {
 		} else if r == 'B' {
 			min += n
 		} else {
-			log.Printf("Invalid char: %s | Pass: %s", string(r), pass)
+			fmt.Printf("Invalid char: %s | Pass: %s\n", string(r), pass)
 		}
 	}
 	row = min
@@ -89,7 +80,7 @@ func GetSeatIDFromBoardingPass(pass string) int {
 		} else if r == 'R' {
 			min += n
 		} else {
-			log.Printf("Invalid char: %s | Pass: %s", string(r), pass)
+			fmt.Printf("Invalid char: %s | Pass: %s\n", string(r), pass)
 		}
 	}
 	col = min

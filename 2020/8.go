@@ -1,33 +1,22 @@
 package main
 
 import (
-	"io/ioutil"
-	"log"
+	"fmt"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
-var re *regexp.Regexp
-
-func init() {
-	re = regexp.MustCompile(`(\w+) (\W\w+)`)
-}
-
-func main() {
-	inputFile := "../input/d8.txt"
-	bytes, err := ioutil.ReadFile(inputFile)
+func day8() error {
+	lines, err := readFileAsStrings()
 	if err != nil {
-		log.Fatalf("Error reading input file: %v", err)
+		return err
 	}
-	contents := string(bytes)
-	lines := strings.Split(contents, "\n")
-	lines = lines[:len(lines)-1]
 	insts := ParseInstructions(lines)
 	res, _ := FindLoop(insts)
-	log.Printf("(Part 1) Accumulator value before loop: %d", res)
+	logResult(8, 1, "Accumulator value before loop", res)
 	res = FixLoop(insts)
-	log.Printf("(Part 2) Accumulator value after fixing loop: %d", res)
+	logResult(8, 2, "Accumulator value after fixing loop", res)
+	return nil
 }
 
 type Instruction struct {
@@ -37,15 +26,16 @@ type Instruction struct {
 
 func ParseInstructions(commands []string) []Instruction {
 	var insts []Instruction
+	re := regexp.MustCompile(`(\w+) (\W\w+)`)
 	for i := 0; i < len(commands); i++ {
 		m := re.FindStringSubmatch(commands[i])
 		if len(m) != 3 {
-			log.Printf("Invalid pattern: %s", commands[i])
+			fmt.Printf("Invalid pattern: %s\n", commands[i])
 			continue
 		}
 		step, err := strconv.Atoi(m[2])
 		if err != nil {
-			log.Printf("Error parsing step: %v", err)
+			fmt.Printf("Error parsing step: %v\n", err)
 			continue
 		}
 		insts = append(insts, Instruction{
@@ -62,11 +52,11 @@ func FindLoop(insts []Instruction) (int, bool) {
 	lookup := make(map[int]bool)
 	for i := 0; i < len(insts); {
 		if _, ok := lookup[i]; ok {
-			log.Printf("Loop detected at pos: %d", i)
+			//fmt.Printf("Loop detected at pos: %d\n", i)
 			isLoop = true
 			break
 		}
-		log.Printf("Processed command: %s | step: %v | pos: %d | accumulator: %d", insts[i].Cmd, insts[i].Step, i, res)
+		//fmt.Printf("Processed command: %s | step: %v | pos: %d | accumulator: %d\n", insts[i].Cmd, insts[i].Step, i, res)
 		lookup[i] = true
 		switch insts[i].Cmd {
 		case "acc":
@@ -88,7 +78,7 @@ func FixLoop(insts []Instruction) int {
 			continue
 		}
 		if insts[i].Cmd == "jmp" {
-			log.Printf("Tried replacing %d inst jmp -> nop ", i)
+			//fmt.Printf("Tried replacing %d inst jmp -> nop \n", i)
 			newInsts := make([]Instruction, len(insts))
 			copy(newInsts, insts)
 			newInsts[i].Cmd = "nop"
@@ -100,7 +90,7 @@ func FixLoop(insts []Instruction) int {
 			continue
 		}
 		if insts[i].Cmd == "nop" {
-			log.Printf("Tried replacing %d inst nop -> jmp ", i)
+			//fmt.Printf("Tried replacing %d inst nop -> jmp \n", i)
 			newInsts := make([]Instruction, len(insts))
 			copy(newInsts, insts)
 			newInsts[i].Cmd = "jmp"

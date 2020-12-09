@@ -1,23 +1,14 @@
 package main
 
-import (
-	"io/ioutil"
-	"log"
-	"strings"
-)
-
-func main() {
-	inputFile := "../input/d6.txt"
-	bytes, err := ioutil.ReadFile(inputFile)
+func day6() error {
+	lines, err := readFileAsStrings()
 	if err != nil {
-		log.Fatalf("Error reading input file: %v", err)
+		return err
 	}
-	contents := string(bytes)
-	lines := strings.Split(contents, "\n")
-	lines = lines[:len(lines)-1]
 	anyCount, everyCount := GetCustomsAnswerCount(lines)
-	log.Printf("(Part 1): Total Customs answer count (anyone answered): %d", anyCount)
-	log.Printf("(Part 2): Total Customs answer count (everyone answered): %d", everyCount)
+	logResult(6, 1, "Total Customs answer count (anyone answered)", anyCount)
+	logResult(6, 2, "Total Customs answer count (everyone answered)", everyCount)
+	return nil
 }
 
 func GetCustomsAnswerCount(input []string) (int, int) {

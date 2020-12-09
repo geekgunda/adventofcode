@@ -1,28 +1,12 @@
 package main
 
-import (
-	"io/ioutil"
-	"log"
-	"strings"
-)
-
-var TreeMap map[string]bool
-
-func init() {
-	TreeMap = make(map[string]bool)
-}
-
-func main() {
-	inputFile := "../input/d3.txt"
-	bytes, err := ioutil.ReadFile(inputFile)
+func day3() error {
+	lines, err := readFileAsStrings()
 	if err != nil {
-		log.Fatalf("Error reading file: %v", err)
+		return err
 	}
-	contents := string(bytes)
-	lines := strings.Split(contents, "\n")
-	lines = lines[:len(lines)-1]
 	count := GetTreeCount(lines, 1, 3)
-	log.Printf("(Part 1) Trees encountered: %d", count)
+	logResult(3, 1, "Trees encountered", count)
 	slopes := [][]int{
 		{1, 1},
 		{1, 3},
@@ -31,14 +15,15 @@ func main() {
 		{2, 1},
 	}
 	product := GetMultipleTreeCount(lines, slopes)
-	log.Printf("(Part 2) Product of trees encountered on slopes: %d", product)
+	logResult(3, 2, "Product of trees encountered on slopes", product)
+	return nil
 }
 
 func GetMultipleTreeCount(tobogganMap []string, slopes [][]int) int64 {
 	product := int64(1)
 	for _, row := range slopes {
 		count := GetTreeCount(tobogganMap, row[0], row[1])
-		log.Printf("Count for slope: %v is %d", row, count)
+		//fmt.Printf("Count for slope: %v is %d", row, count)
 		product *= int64(count)
 	}
 	return product

@@ -2,43 +2,32 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"log"
 	"regexp"
 	"strconv"
 	"strings"
 )
 
-var re *regexp.Regexp
-
-func init() {
-	re = regexp.MustCompile(`(\d+)-(\d+)\s(\w+):\s(\w+)`)
-}
-
-func main() {
-	inputFile := "../input/d2.txt"
-	bytes, err := ioutil.ReadFile(inputFile)
+func day2() error {
+	input, err := readFileAsStrings()
 	if err != nil {
-		log.Fatalf("Error reading input file: %v", err)
+		return err
 	}
-	contents := string(bytes)
-	lines := strings.Split(contents, "\n")
-	lines = lines[:len(lines)-1]
-	validCount, err := GetValidPasswordCount(lines, false)
+	validCount, err := GetValidPasswordCount(input, false)
 	if err != nil {
-		log.Fatalf("Error processing: %v", err)
+		return err
 	}
-	log.Printf("(Part1) Valid password count: %d", validCount)
-	if validCount, err = GetValidPasswordCount(lines, true); err != nil {
-		log.Fatalf("Error processing part2: %v", err)
+	logResult(2, 1, "Valid password count", validCount)
+	if validCount, err = GetValidPasswordCount(input, true); err != nil {
+		return err
 	}
-	log.Printf("(Part2) Valid password count: %d", validCount)
-
+	logResult(2, 2, "Valid password count", validCount)
+	return nil
 }
 
 func GetValidPasswordCount(lines []string, policyPart2 bool) (int, error) {
 	var ct, pos1, pos2 int
 	var err error
+	re := regexp.MustCompile(`(\d+)-(\d+)\s(\w+):\s(\w+)`)
 	for _, line := range lines {
 		p := re.FindStringSubmatch(line)
 		if len(p) != 5 {
