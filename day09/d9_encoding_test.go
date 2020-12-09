@@ -25,8 +25,12 @@ func TestFindInvalidNumber(t *testing.T) {
 		309,
 		576,
 	}
-	res := FindInvalidNumber(input, 5)
+	res, pos := FindInvalidNumber(input, 5)
 	if res != 127 {
-		t.Errorf("Invalid result: %d", res)
+		t.Errorf("Wrong invalid number: %d", res)
+	}
+	res = FindEncryptionWeakness(input, pos)
+	if res != 62 {
+		t.Errorf("Wrong encryption weakness: %d", res)
 	}
 }
