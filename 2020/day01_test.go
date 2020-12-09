@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestFindMatchingPair(t *testing.T) {
+func TestDay01FindMatchingPair(t *testing.T) {
 	var input = []int64{1721,
 		979,
 		366,
@@ -20,7 +20,7 @@ func TestFindMatchingPair(t *testing.T) {
 	}
 }
 
-func TestFindMatchingTriplet(t *testing.T) {
+func TestDay01FindMatchingTriplet(t *testing.T) {
 	var input = []int64{1721,
 		979,
 		366,

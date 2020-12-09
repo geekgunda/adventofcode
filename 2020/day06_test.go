@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestGetCustomsAnswerCount(t *testing.T) {
+func TestDay06GetCustomsAnswerCount(t *testing.T) {
 	var input = []string{
 		"abc",
 		"",

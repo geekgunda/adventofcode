@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestGetSeatIDFromBoardingPass(t *testing.T) {
+func TestDay05GetSeatIDFromBoardingPass(t *testing.T) {
 	tt := []struct {
 		name         string
 		boardingPass string
@@ -24,7 +24,7 @@ func TestGetSeatIDFromBoardingPass(t *testing.T) {
 	}
 }
 
-func TestGetHighestSeatID(t *testing.T) {
+func TestDay05GetHighestSeatID(t *testing.T) {
 	input := []string{
 		"FBFBBFFRLR",
 		"BFFFBBFRRR",

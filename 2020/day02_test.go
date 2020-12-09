@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestGetValidPasswordCountByPart1Policy(t *testing.T) {
+func TestDay02GetValidPasswordCountByPart1Policy(t *testing.T) {
 	input := []string{
 		"1-3 a: abcde",
 		"1-3 b: cdefg",
@@ -17,7 +17,7 @@ func TestGetValidPasswordCountByPart1Policy(t *testing.T) {
 	}
 }
 
-func TestGetValidPasswordCountByPart2Policy(t *testing.T) {
+func TestDay02GetValidPasswordCountByPart2Policy(t *testing.T) {
 	input := []string{
 		"1-3 a: abcde",
 		"1-3 b: cdefg",

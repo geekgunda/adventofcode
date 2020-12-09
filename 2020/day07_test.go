@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestFindMatchingParentBags(t *testing.T) {
+func TestDay07FindMatchingParentBags(t *testing.T) {
 	input := []string{
 		"light red bags contain 1 bright white bag, 2 muted yellow bags.",
 		"dark orange bags contain 3 bright white bags, 4 muted yellow bags.",
@@ -14,7 +14,10 @@ func TestFindMatchingParentBags(t *testing.T) {
 		"faded blue bags contain no other bags.",
 		"dotted black bags contain no other bags.",
 	}
-	parentCount, childCount := FindMatches(input, "shiny gold")
+	parentCount, childCount, err := FindMatches(input, "shiny gold")
+	if err != nil {
+		t.Errorf("Error finding matches: %v", err)
+	}
 	if parentCount != 4 {
 		t.Errorf("Invalid parent count: %d", parentCount)
 	}

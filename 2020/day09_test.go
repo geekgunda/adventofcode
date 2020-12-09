@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestFindInvalidNumber(t *testing.T) {
+func TestDay09FindInvalidNumber(t *testing.T) {
 	input := []int64{
 		35,
 		20,

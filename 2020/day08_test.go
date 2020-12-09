@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestFindAndFixLoop(t *testing.T) {
+func TestDay08FindAndFixLoop(t *testing.T) {
 	input := []string{
 		"nop +0",
 		"acc +1",

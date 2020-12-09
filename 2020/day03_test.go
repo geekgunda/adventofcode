@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestGetTreeCount(t *testing.T) {
+func TestDay03GetTreeCount(t *testing.T) {
 	input := []string{
 		"..##.......",
 		"#...#...#..",
@@ -22,7 +22,7 @@ func TestGetTreeCount(t *testing.T) {
 	}
 }
 
-func TestGetMultipleTreeCount(t *testing.T) {
+func TestDay03GetMultipleTreeCount(t *testing.T) {
 	input := []string{
 		"..##.......",
 		"#...#...#..",
