@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -26,6 +27,22 @@ func readFileAsInts64() ([]int64, error) {
 	input := make([]int64, len(lines))
 	for i, l := range lines {
 		num, err := strconv.ParseInt(l, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		input[i] = num
+	}
+	return input, nil
+}
+
+func readFileAsIntSlice() (sort.IntSlice, error) {
+	lines, err := readFileAsStrings()
+	if err != nil {
+		return nil, err
+	}
+	input := make(sort.IntSlice, len(lines))
+	for i, l := range lines {
+		num, err := strconv.Atoi(l)
 		if err != nil {
 			return nil, err
 		}
