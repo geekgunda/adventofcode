@@ -51,6 +51,25 @@ func readFileAsIntSlice() (sort.IntSlice, error) {
 	return input, nil
 }
 
+func readFileAsNumbersCsv() ([]int, error) {
+	lines, err := readFileAsStrings()
+	if err != nil {
+		return nil, err
+	}
+	var res []int
+	for _, l := range lines {
+		numArr := strings.Split(l, ",")
+		for _, num := range numArr {
+			n, e := strconv.Atoi(num)
+			if e != nil {
+				fmt.Errorf("Error parsing num: %v", e)
+			}
+			res = append(res, n)
+		}
+	}
+	return res, nil
+}
+
 func logResult(day, part int, msg string, ans interface{}) {
 	fmt.Printf("Day %d | Part %d | %s: %v\n", day, part, msg, ans)
 }
