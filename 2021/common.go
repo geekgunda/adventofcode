@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// Read input file as a slice of string
 func readFileAsStrings() ([]string, error) {
 	bytes, err := ioutil.ReadFile(*inputFile)
 	if err != nil {
@@ -19,6 +20,7 @@ func readFileAsStrings() ([]string, error) {
 	return lines, nil
 }
 
+// Read input file as a slice of int64
 func readFileAsInts64() ([]int64, error) {
 	lines, err := readFileAsStrings()
 	if err != nil {
@@ -35,6 +37,7 @@ func readFileAsInts64() ([]int64, error) {
 	return input, nil
 }
 
+// Read input file as an IntSlice for easy sorting later
 func readFileAsIntSlice() (sort.IntSlice, error) {
 	lines, err := readFileAsStrings()
 	if err != nil {
@@ -51,6 +54,7 @@ func readFileAsIntSlice() (sort.IntSlice, error) {
 	return input, nil
 }
 
+// Read input file as a multi line comma separated numbers
 func readFileAsNumbersCsv() ([]int, error) {
 	lines, err := readFileAsStrings()
 	if err != nil {
@@ -70,6 +74,7 @@ func readFileAsNumbersCsv() ([]int, error) {
 	return res, nil
 }
 
+// Log the result in a standard format, listing the day and part of problem
 func logResult(day, part int, msg string, ans interface{}) {
 	fmt.Printf("Day %d | Part %d | %s: %v\n", day, part, msg, ans)
 }
