@@ -66,9 +66,29 @@ func readFileAsNumbersCsv() ([]int, error) {
 		for _, num := range numArr {
 			n, e := strconv.Atoi(num)
 			if e != nil {
-				fmt.Errorf("Error parsing num: %v", e)
+				return nil, fmt.Errorf("Error parsing num: %v", e)
 			}
 			res = append(res, n)
+		}
+	}
+	return res, nil
+}
+
+// Read input file as a 2-D integer array
+func readFileAs2DIntArray() ([][]int, error) {
+	lines, err := readFileAsStrings()
+	if err != nil {
+		return nil, err
+	}
+	res := make([][]int, len(lines))
+	for i, line := range lines {
+		res[i] = make([]int, len(line))
+		for j, r := range line {
+			n, e := strconv.Atoi(string(r))
+			if e != nil {
+				return nil, fmt.Errorf("Error parsing num: %v", e)
+			}
+			res[i][j] = n
 		}
 	}
 	return res, nil
