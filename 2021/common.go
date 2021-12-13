@@ -62,14 +62,24 @@ func readFileAsNumbersCsv() ([]int, error) {
 	}
 	var res []int
 	for _, l := range lines {
-		numArr := strings.Split(l, ",")
-		for _, num := range numArr {
-			n, e := strconv.Atoi(num)
-			if e != nil {
-				return nil, fmt.Errorf("Error parsing num: %v", e)
-			}
-			res = append(res, n)
+		numbers, err := readLineAsNumbersCsv(l)
+		if err != nil {
+			return nil, fmt.Errorf("Error parsing num: %v", err)
 		}
+		res = append(res, numbers...)
+	}
+	return res, nil
+}
+
+func readLineAsNumbersCsv(line string) ([]int, error) {
+	var res []int
+	numArr := strings.Split(line, ",")
+	for _, num := range numArr {
+		n, e := strconv.Atoi(num)
+		if e != nil {
+			return nil, fmt.Errorf("Error parsing num: %v", e)
+		}
+		res = append(res, n)
 	}
 	return res, nil
 }
