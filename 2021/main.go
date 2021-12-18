@@ -49,6 +49,8 @@ func solveProblem(num int) (err error) {
 		err = day13()
 	case 14:
 		err = day14()
+	case 15:
+		err = day15()
 	default:
 		err = fmt.Errorf("This problem does not have a solution yet!")
 	}
