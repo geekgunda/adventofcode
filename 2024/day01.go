@@ -36,9 +36,31 @@ func main() {
 	}
 	slices.Sort(left)
 	slices.Sort(right)
-	var result int
+	var distance int
 	for i := 0; i < size; i++ {
-		result += int(math.Abs(float64(left[i] - right[i])))
+		distance += int(math.Abs(float64(left[i] - right[i])))
 	}
-	log.Printf("Result for part 1: %v", result)
+	log.Printf("Result for part 1: %v", distance)
+
+	// Part 2
+	// Slices are already sorted. Lets utilize that!
+	var similarity, ri, match int
+	for i, val := range left {
+		for ri < size && left[i] > right[ri] {
+			ri++
+		}
+		mri := ri
+		for ri < size && left[i] == right[ri] {
+			match++
+			ri++
+		}
+		if match > 0 {
+			//log.Printf("Left index: %v | Value: %v | Match times: %v", i, val, match)
+			similarity += val * match
+			match = 0
+			// reset it back to last matched right index
+			ri = mri
+		}
+	}
+	log.Printf("Result for part 2: %v", similarity)
 }
